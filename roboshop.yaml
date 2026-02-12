@@ -5,7 +5,8 @@
     instances:
     - mongodb
     - catalogue
-    env: Dev
+    env: dev
+    domain_name: advi.devops.online
   tasks:
     - name: creating aws ec2 instance
       amazon.aws.ec2_instance:
@@ -24,3 +25,18 @@
     - name: Print the output
       ansible.builtin.debug:
         msg: "{{ ec2_output}}"
+    
+    - name: creating route53 records with private ip
+      amazon.aws.route53:
+        state: present
+        zone: "{{ domain_name }}"
+        record: "{{ item.item }}.{{env}}.{{ domain_name }}" #mongodb.dev.advidevops.online
+        type: A
+        ttl: 7200
+        value: "{{ item.instances[0].private_ip_address}}"
+        loop: "{{ ec2_output.results }}"
+        register : route53_output
+
+    - name: Print route53 full output
+      ansible.builtin.debug:
+       msg: route53_output
