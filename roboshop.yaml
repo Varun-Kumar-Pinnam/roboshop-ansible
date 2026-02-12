@@ -30,13 +30,12 @@
       amazon.aws.route53:
         state: present
         zone: "{{ domain_name }}"
-        record: "{{ item.item }}.{{env}}.{{ domain_name }}" #mongodb.dev.advidevops.online
+        record: "{{ item.item }}-{{env}}.{{ domain_name }}" #mongodb.dev.advidevops.online
         type: A
         ttl: 7200
         value: "{{ item.instances[0].private_ip_address}}"
       loop: "{{ ec2_output.results }}"
-      register : route53_output
+      when: action == "create"
 
-    - name: Print route53 full output
-      ansible.builtin.debug:
-       msg: "{{ route53_output }}"
+ 
+ 
