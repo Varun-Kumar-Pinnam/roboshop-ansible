@@ -2,7 +2,7 @@
   hosts: all
   connection: local
   vars:
-    action: create
+    #action: create
     instances:
     - mongodb
     - catalogue
@@ -37,7 +37,9 @@
         ttl: 1
         value: "{{ item.instances[0].private_ip_address}}"
       loop: "{{ ec2_output.results }}"
-      when: action == "create"
+      when: 
+      - item.item !== "frontend"
+      - action == "create"
 
 # creating route53 records for frontend server
     - name: creating route53 records with public ip
