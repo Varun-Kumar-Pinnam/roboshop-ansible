@@ -1,0 +1,28 @@
+- name: roboshop ec2 instance creation
+  hosts: all
+  connection: local
+  vars:
+    sg_id: sg-02a915d53f8e3507f
+    ami: ami-0220d79f3f480ecf5
+    env: Dev
+    instances:
+    - mongodb
+    - catalogue
+  tasks:
+    - name: Ec2 instance creation
+      amazon.aws.ec2_instance:
+        instance_type: "t3.micro"
+        security_group: "{{ sg_id }}"
+        image_id: "{{ ami }}"
+        name: "{{ item }}-{{ env }}"
+        tags:
+          Project: roboshop
+          Component: "{{ item }}"
+          Environment: "{{ env }}"
+          Name: "{{ item }}-{{ env }}"
+      loop: "{{ instances }}"
+      register: ec2-output
+
+- name: print the output
+  ansible.builtin.debug:
+    msg : "{{ ec2-output }}"
