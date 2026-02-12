@@ -55,8 +55,7 @@
       ansible.builtin.template:
         src: catalogue.service
         dest: /etc/systemd/system/catalogue.service
-      notify: Reload systemd
-
+      
     - name: Reload systemd
       ansible.builtin.systemd_service:
         daemon_reload: true
