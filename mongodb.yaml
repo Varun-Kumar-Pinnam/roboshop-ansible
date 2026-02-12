@@ -10,7 +10,7 @@
   # Installing mongodb
   - name: Installing mongodb
     ansible.builtin.dnf:
-      name: mongodb
+      name: mongodb-org
       state: present
 
   # Allowing remote connections
@@ -19,7 +19,7 @@
       path: /etc/mongod.conf
       regexp: '127.0.0.1'
       replace: '0.0.0.0'
-      
+
   # Start and Enable the service
   - name: Start and enabling the service
     ansible.builtin.systemd_service:
