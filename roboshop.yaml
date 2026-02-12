@@ -38,7 +38,7 @@
         value: "{{ item.instances[0].private_ip_address}}"
       loop: "{{ ec2_output.results }}"
       when: 
-      - item.item !== "frontend"
+      - item.item != "frontend"
       - action == "create"
 
 # creating route53 records for frontend server
