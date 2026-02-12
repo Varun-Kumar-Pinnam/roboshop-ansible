@@ -2,6 +2,7 @@
   hosts: all
   connection: local
   vars:
+    action: create
     instances:
     - mongodb
     - catalogue
