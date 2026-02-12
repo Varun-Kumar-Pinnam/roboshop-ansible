@@ -6,7 +6,7 @@
     - mongodb
     - catalogue
     env: dev
-    domain_name: advi.devops.online
+    domain_name: advidevops.online
   tasks:
     - name: creating aws ec2 instance
       amazon.aws.ec2_instance:
