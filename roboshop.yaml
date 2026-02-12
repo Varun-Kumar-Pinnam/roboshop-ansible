@@ -39,4 +39,4 @@
 
     - name: Print route53 full output
       ansible.builtin.debug:
-       msg: route53_output
+       msg: "{{ route53_output }}"
