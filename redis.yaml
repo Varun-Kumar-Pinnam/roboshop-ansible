@@ -1,6 +1,6 @@
 - name: redis configuration
-  hosts: all
-  connection: local
+  hosts: redis
+  become: yes
   tasks:
     - name: disable redis module
       ansible.builtin.command: dnf module disable redis -y
