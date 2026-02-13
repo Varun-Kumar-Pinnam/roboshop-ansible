@@ -55,5 +55,24 @@
       - item.item == "frontend"
       - action == "create"
 
- 
- 
+# Delete route53 records
+    - name: deleting route53 records
+      amazon.aws.route53:
+        state: absent
+        zone: "{{ domain_name }}"
+        record: "roboshop-{{env}}.{{ domain_name }}"
+        ttl: 1
+        type: A
+        value: "{{ item.instances[0].public_ip_address}}
+      loop: "{{ instances }}"
+      when: 
+      - action == "destroy"
+
+# Delete instances  
+    - name: delete ec2 instance
+      amazon.aws.ec2_instance:
+          state: absent
+          name: "{{ item }}-{{ env }}"
+          wait: false
+      loop: "{{ instances }}"
+      when: action == "destroy"
