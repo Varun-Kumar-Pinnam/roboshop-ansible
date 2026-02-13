@@ -60,7 +60,7 @@
       amazon.aws.route53:
         state: absent
         zone: "{{ domain_name }}"
-        record: "{{ item.item }}-{{env}}.{{ domain_name }}"
+        record: "{{ item }}-{{env}}.{{ domain_name }}"
         ttl: 1
         type: A
       loop: "{{ instances }}"
