@@ -1,5 +1,5 @@
 - name: shipping configuration
-  hosts: cashippingrt
+  hosts: shipping
   become: yes
   tasks:
     - name: installing maven
