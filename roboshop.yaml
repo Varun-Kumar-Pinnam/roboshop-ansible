@@ -60,10 +60,21 @@
       amazon.aws.route53:
         state: absent
         zone: "{{ domain_name }}"
+        record: "{{ item.item }}-{{env}}.{{ domain_name }}"
+        ttl: 1
+        type: A
+      loop: "{{ instances }}"
+      when: 
+      - action == "destroy"
+
+# Delete route53 records for frontend
+    - name: deleting route53 records
+      amazon.aws.route53:
+        state: absent
+        zone: "{{ domain_name }}"
         record: "roboshop-{{env}}.{{ domain_name }}"
         ttl: 1
         type: A
-        value: "{{ item.instances[0].public_ip_address}}
       loop: "{{ instances }}"
       when: 
       - action == "destroy"
