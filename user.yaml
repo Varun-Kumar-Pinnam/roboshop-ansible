@@ -51,6 +51,7 @@
     - name: Install packages based on package.json.
       community.general.npm:
         path: /app
+        
     - name: copy service file to /etc/systemd/system/user.service
       ansible.builtin.template:
         src: user.service
